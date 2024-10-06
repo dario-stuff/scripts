@@ -1,0 +1,49 @@
+local crazyv3key = {"Cracked by White, Discord: white_66373"}
+-- DO NOT CHANGE THE KEY ⬆⬆⬆⬆⬆⬆
+
+getgenv().crazy = {
+    Silent = {
+        ["Enabled"] = true,
+        ["Part"] = "HumanoidRootPart",
+        ["PredictionAmount"] = 0.119,
+        ["NearestPoint"] = true
+    },
+    FOV = {
+        ["Visible"] = true,
+        ["Filled"] = false,
+        ["Radius"] = 80,
+        ["Rainbow"] = true
+    },
+    Resolver = {
+        ["Enabled"] = true,
+        ["AntiAimViewer"] = true,
+        ["AntiGroundShots"] = true
+    },
+    Tracer = {
+        ["Key"] = "C",
+        ["Aimpart"] = "Head",
+        ["Enabled"] = true,
+        ["Prediction"] = 0.025,
+        ["Smoothness"] = 0.0978334,
+    },
+    AutoSilentPrediction = {
+        ["Enabled"] = false,
+        ["Amount_150"] = 0.163,
+        ["Amount_140"] = 0.132,
+        ["Amount_130"] = 0.172,
+        ["Amount_127"] = 0.127,
+        ["Amount_135"] = 0.135,
+        ["Amount_120"] = 0.133,
+        ["Amount_110"] = 0.184,
+        ["Amount_100"] = 0.145,
+        ["Amount_90"] = 0.149,
+        ["Amount_80"] = 0.139,
+        ["Amount_70"] = 0.154,
+        ["Amount_60"] = 0.196,
+        ["Amount_50"] = 0.1227
+    },
+    Checks = {
+        ["Wall_Check"] = true,
+        ["Crew_Check"] = false
+    }
+}
