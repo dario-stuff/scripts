@@ -1,0 +1,137 @@
+setfpscap(FpsUnlocker_DarioScripts)
+FpsUnlocker_DarioScripts = 130
+
+local AkaliNotif = loadstring(game:HttpGet("https://rentry.co/oreo-search-notif/raw"))()
+local Notify = AkaliNotif.Notify
+
+Notify({
+    Description = "Thanks for using our script",
+    Title = "FPS BOOST [❤]",
+    Duration = 5,
+})
+
+local player = game.Players.LocalPlayer
+local screenGui = Instance.new("ScreenGui", player.PlayerGui)
+local frame = Instance.new("Frame")
+local textLabel = Instance.new("TextLabel")
+
+-- Setup Frame
+frame.Size = UDim2.new(0, 100, 0, 50)
+frame.Position = UDim2.new(0.5, -50, 0.5, -25) -- Center of the screen
+frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+frame.BackgroundTransparency = 0.5
+frame.Parent = screenGui
+
+-- Setup TextLabel
+textLabel.Size = UDim2.new(1, 0, 1, 0)
+textLabel.BackgroundTransparency = 1
+textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.TextScaled = true
+textLabel.Text = "FPS: 0"
+textLabel.Parent = frame
+
+-- Function to update FPS
+local function updateFPS()
+    local fps = 1 / task.wait()
+    textLabel.Text = "FPS: " .. math.floor(fps)
+end
+
+-- Draggable functionality
+local dragging
+local dragInput
+local startPos
+local startSize
+
+frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        startPos = input.Position
+        startSize = frame.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+frame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if dragging then
+        local delta = dragInput.Position - startPos
+        frame.Position = UDim2.new(startSize.X.Scale, startSize.X.Offset + delta.X, startSize.Y.Scale, startSize.Y.Offset + delta.Y)
+    end
+end)
+
+-- Start updating FPS
+coroutine.wrap(function()
+    while true do
+        updateFPS()
+    end
+end)()
+
+local decalsyeeted = true
+local g = game
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+
+-- Terrain and Lighting Settings
+t.WaterWaveSize = 0
+t.WaterWaveSpeed = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 0
+l.GlobalShadows = false
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+
+-- Function to disable shadows, decals, and set materials
+for i, v in pairs(g:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+        v.CastShadow = false  -- Disable shadows for parts
+    elseif (v:IsA("Decal") or v:IsA("Texture")) and decalsyeeted then
+        v.Transparency = 1  -- Disable decals by setting transparency to 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+        v.TextureID = 0  -- Set the texture ID to 0 to remove the texture
+        v.CastShadow = false  -- Disable shadows for MeshParts
+    end
+end
+
+-- Disable Lighting Effects
+for i, e in pairs(l:GetChildren()) do
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
+    end
+end
+
+-- Destroy Shirt and Pants from Character
+local character = player.Character or player.CharacterAdded:Wait()
+
+local shirt = character:FindFirstChildOfClass("Shirt")
+local pants = character:FindFirstChildOfClass("Pants")
+
+if shirt then
+    shirt:Destroy()  -- Destroy shirt
+end
+
+if pants then
+    pants:Destroy()  -- Destroy pants
+end
